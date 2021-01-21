@@ -1,0 +1,15 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Questrial", "sans-serif";
+  letter-spacing: 1px;
+  color: #656565;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
