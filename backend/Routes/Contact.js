@@ -17,7 +17,21 @@ router.post("/contact", (req, res) => {
     to: process.env.RECEIVER_EMAIL,
     from: req.body.email,
     subject: req.body.subject,
-    text: req.body.message,
+    html: `<html>
+    <head>
+    <title></title>
+    </head>
+    <body>
+      <h5>Name:</h5>
+      <p>${req.body.name}</p>    
+      <h5>Email:</h5>
+      <p>${req.body.email}</p>    
+      <h5>Name:</h5>
+      <p>${req.body.message}</p>    
+          
+    </body>
+    </html>
+    `,
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
