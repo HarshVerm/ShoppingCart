@@ -111,9 +111,9 @@ export function ProductDetail() {
             <Grid
               item
               xs={12}
-              sm={6}
-              lg={4}
-              xl={4}
+              sm={5}
+              lg={3}
+              xl={3}
               style={{ textAlign: "center" }}>
               <Box className={classes.details}>
                 <Typography variant="body2" gutterBottom>

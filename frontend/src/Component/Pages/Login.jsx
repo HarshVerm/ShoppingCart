@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Container, Grid } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Container, Grid, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/User/actions";
+import Alert from "@material-ui/lab/Alert";
+import { setErrorFalse } from "../../Redux/User/actions";
 
 const useStyle = makeStyles((theme) => ({
   form_container: {
@@ -58,6 +60,23 @@ const useStyle = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  alert_container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "7px",
+    color: "white",
+  },
+  alert: {
+    width: "350px",
+    fontSize: "12px",
+  },
+  btn_container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
 export function Login() {
@@ -66,13 +85,20 @@ export function Login() {
   const dispatch = useDispatch();
   const classes = useStyle();
   const err = useSelector((state) => state.users.isError);
+  const errMsg = useSelector((state) => state.users.error);
   const isAuth = useSelector((state) => state.users.isAuth);
+  const loading = useSelector((state) => state.users.isLoading);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
   console.log(isAuth);
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setErrorFalse());
+    }, 3000);
+  }, [err]);
 
   return !isAuth ? (
     <Container>
@@ -83,6 +109,16 @@ export function Login() {
           <Grid item>
             <div style={{ textAlign: "center", fontWeight: "lighter" }}>
               LOGIN
+            </div>
+            <div className={classes.alert_container}>
+              {err && (
+                <Alert
+                  variant="outlined"
+                  severity="error"
+                  className={classes.alert}>
+                  {errMsg.msg ? errMsg.msg : errMsg}
+                </Alert>
+              )}
             </div>
             <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
               <div>
@@ -103,11 +139,13 @@ export function Login() {
                   className={classes.form_input}
                 />
               </div>
-              <div>
+              <div className={classes.btn_container}>
+                {loading && <CircularProgress disableShrink />}
                 <input
                   type="submit"
                   className={classes.form_submit}
                   value="Sign In"
+                  disabled={loading ? true : false}
                 />
               </div>
             </form>

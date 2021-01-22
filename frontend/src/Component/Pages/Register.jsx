@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../../Redux/User/actions";
 import { useHistory, Redirect, NavLink } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
+import { setErrorFalse } from "../../Redux/User/actions";
 
 const useStyle = makeStyles((theme) => ({
   form_container: {
@@ -59,6 +60,23 @@ const useStyle = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: "12px",
   },
+  alert_container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "7px",
+    color: "white",
+  },
+  alert: {
+    width: "350px",
+    fontSize: "12px",
+  },
+  btn_container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
 export function Register() {
@@ -70,7 +88,10 @@ export function Register() {
   const dispatch = useDispatch();
   const history = useHistory();
   const err = useSelector((state) => state.users.isError);
+  const errMsg = useSelector((state) => state.users.error);
   const isAuth = useSelector((state) => state.users.isAuth);
+  const register = useSelector((state) => state.users.register);
+  const loading = useSelector((state) => state.users.isLoading);
 
   const handleSumit = (e) => {
     e.preventDefault();
@@ -83,10 +104,22 @@ export function Register() {
 
     dispatch(userRegister(payload));
   };
-  console.log(isAuth);
-  const handleError = () => {
-    alert("User already exist.");
-  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setErrorFalse());
+    }, 3000);
+  }, [err]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      // alert("registration success");
+      dispatch(setErrorFalse());
+      if (register) {
+        history.push("/account/login");
+      }
+    }, 5000);
+  }, [register]);
 
   return !isAuth ? (
     <Container>
@@ -98,16 +131,21 @@ export function Register() {
             <div style={{ textAlign: "center", fontWeight: "lighter" }}>
               CREATE ACCOUNT
             </div>
-            {err && (
-              <Alert variant="outlined" severity="error">
-                User already exist
-              </Alert>
-            )}
-            {err && (
-              <Alert variant="outlined" severity="error">
-                User already exist
-              </Alert>
-            )}
+            <div className={classes.alert_container}>
+              {err && (
+                <Alert
+                  variant="outlined"
+                  severity="error"
+                  className={classes.alert}>
+                  {errMsg.msg ? errMsg.msg : errMsg}
+                </Alert>
+              )}
+              {register && (
+                <Alert variant="filled" severity="success">
+                  Registration Successfull
+                </Alert>
+              )}
+            </div>
             <form className={classes.form} onSubmit={(e) => handleSumit(e)}>
               <div>
                 <input
@@ -136,7 +174,7 @@ export function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
                   className={classes.form_input}
-                  required
+                  // required
                 />
               </div>
               <div>
@@ -150,6 +188,7 @@ export function Register() {
                 />
               </div>
               <div>
+                {loading && <CircularProgress disableShrink />}
                 <input
                   type="submit"
                   className={classes.form_submit}

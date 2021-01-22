@@ -4,19 +4,20 @@ import {
   FETCH_USER_SUCCESS,
   FETCH_LOGIN_SUCCESS,
   USER_LOGOUT,
+  SET_ERROR,
 } from "./actionTypes";
 import axios from "axios";
 
-export const fetchUserSuccess = (payload) => {
+export const fetchUserSuccess = () => {
   return {
     type: FETCH_USER_SUCCESS,
-    payload,
   };
 };
 
-export const fetchUserError = () => {
+export const fetchUserError = (payload) => {
   return {
     type: FETCH_USER_ERROR,
+    payload,
   };
 };
 
@@ -39,6 +40,12 @@ export const fetchLoginSuccess = (payload) => {
   };
 };
 
+export const setErrorFalse = () => {
+  return {
+    type: SET_ERROR,
+  };
+};
+
 export const userRegister = (paylaod) => (dispatch) => {
   dispatch(fetchUserLoading());
 
@@ -54,9 +61,12 @@ export const userRegister = (paylaod) => (dispatch) => {
   axios(config)
     .then((res) => {
       console.log(res);
-      dispatch(fetchUserSuccess(true));
+      dispatch(fetchUserSuccess());
     })
-    .catch((err) => dispatch(fetchUserError()));
+    .catch((err) => {
+      console.log(err.response);
+      dispatch(fetchUserError(err.response.data));
+    });
 };
 
 export const loginUser = (paylaod) => (dispatch) => {
@@ -73,7 +83,7 @@ export const loginUser = (paylaod) => (dispatch) => {
 
   axios(config)
     .then((res) => dispatch(fetchLoginSuccess(res.data)))
-    .catch((err) => dispatch(fetchUserError()));
+    .catch((err) => dispatch(fetchUserError(err.response.data)));
 };
 
 export const userLogout = () => (dispatch) => {

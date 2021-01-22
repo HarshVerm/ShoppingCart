@@ -53,7 +53,7 @@ export const Profile = () => {
       <Container className={classes.container}>
         <Grid container>
           <Grid item sm={2}></Grid>
-          <Grid item xs={12} sm>
+          <Grid item xs={2} sm>
             <Grid
               container
               justify="flex-start"
@@ -104,7 +104,7 @@ export const Profile = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid itemsm={2}></Grid>
+          <Grid item sm={2}></Grid>
         </Grid>
       </Container>
     </Box>

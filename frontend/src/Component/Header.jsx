@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "9px",
     textAlign: "center",
   },
+  icon_container: {
+    display: "flex",
+    flexDirection: "flex-end",
+    // justifyContent: "",
+  },
 }));
 export function Header() {
   const classes = useStyles();
@@ -24,12 +29,12 @@ export function Header() {
     <AppBar position="sticky" className={classes.header}>
       <Container>
         <Grid container justify="flex-start" className={classes.container}>
-          <Grid item xs>
+          <Grid item xs sm={1} className={classes.icon_container}>
             <NavLink to="/profile">
               <PersonIcon />
             </NavLink>
           </Grid>
-          <Grid item xs={6} className={classes.heading}>
+          <Grid item xs={10} className={classes.heading}>
             OFFICIAL KETNIPZ ONLINE STORE
           </Grid>
           <Grid item xs></Grid>
