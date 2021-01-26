@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Grid, Typography, TextField } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { sentMail, setSentfalse } from "../../Redux/Contact/actions";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -60,7 +60,7 @@ export function ContactUs() {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isError, isLoding, sent } = useSelector((state) => state.contact);
+  const { sent } = useSelector((state) => state.contact);
 
   const handleSubmit = (e) => {
     e.preventDefault();

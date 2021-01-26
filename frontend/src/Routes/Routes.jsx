@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import { Profile } from "../Component/Pages/Profile";
 import { Header } from "../Component/Header";
 import { ContactUs } from "../Component/Pages/ContactUs";
+import { Checkout } from "../Component/Pages/Checkout/Checkout";
 
 export function Routes() {
   return (
@@ -36,11 +37,13 @@ export function Routes() {
           exact
           render={(props) => <Register {...props} />}
         />
+        <PrivateRoute exact path="/cart/checkout" Component={Checkout} />
         <Route
           path="/contact-us"
           exact
           render={(props) => <ContactUs {...props} />}
         />
+        <Route exact render={() => <h1>404</h1>} />
       </Switch>
       <Route path="/" render={(props) => <Footer {...props} />} />
     </div>

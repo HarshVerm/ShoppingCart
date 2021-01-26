@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Container, useMediaQuery } from "@material-ui/core";
+import { useEffect } from "react";
+import { Container } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import { Grid } from "@material-ui/core";
@@ -24,12 +24,12 @@ export function Home() {
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyle();
-  const match = useMediaQuery("(min-width:700px)");
+  // const match = useMediaQuery("(min-width:700px)");
   const products = useSelector((state) => state.products.products);
 
   useEffect(() => {
-    console.log(dispatch(loadData()));
-  }, []);
+    dispatch(loadData());
+  }, [dispatch]);
 
   const handleClick = (_id, item = null) => {
     const location = {

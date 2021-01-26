@@ -5,44 +5,59 @@ const getCart = (req, res) => {
   //   const cart = req.body;
   console.log(req.params);
   Cart.find({ user_id: id }).then((data) => {
-    // console.log(data);
-    if (data.length === 0) {
-      const newCart = new Cart({ user_id: id, cart_list: [] });
-      newCart.save().then((data) => {
-        console.log(data);
-        res.status(200).send({
-          data,
-        });
-      });
-    } else {
-      res.send(data);
-    }
+    res.status(200).send(data);
+    res.end();
   });
 };
 
-const addToCart = (req, res) => {
-  const id = req.params.id;
-  console.log(req.body, "abbaaaaaaaaaa");
-  Cart.find({ user_id: id }).then((data) => {
-    console.log(data, "data");
-    if (data.length === 0) {
-      const newCart = new Cart({
-        user_id: id,
-        cart_list: req.body,
-      });
-      newCart.save().then((data) => {
-        // console.log(data);
-        res.status(200).send({
-          data,
-        });
+const addToCart = async (req, res) => {
+  const id = req.body.user_id;
+  const product = req.body.product_id;
+  let qty = req.body.qty;
+  console.log(req.body);
+  await Cart.findOne({
+    user_id: id,
+    product_id: product,
+  }).then((data) => {
+    if (data) {
+      qty = Number(data.qty) + Number(qty);
+      Cart.updateOne(
+        { user_id: id, product_id: product },
+        { qty: qty, date: Date().toLocaleString() },
+      ).then((data) => {
+        res.status(200).send(data);
       });
     } else {
-      let newCart = data[0].cart_list.push(req.body);
-      Cart.updateOne({ user_id: id }, { cart_list: newCart }).then((data) => {
-        res.send(data);
+      const newCart = new Cart(req.body);
+      newCart.save().then((data) => {
+        res.status(200).status(200).send(data);
       });
     }
   });
 };
 
+const removeById = (req, res) => {
+  Cart.findOneAndDelete({
+    _id: req.params.id,
+  }).then(() => {
+    res.status(200).send("Product remove successfully");
+  });
+};
 module.exports = { getCart, addToCart };
+
+const emptyCart = (req, res) => {
+  Cart.deleteMany({ user_id: req.params.id }).then(() =>
+    res.status(200).send("Cart empty"),
+  );
+};
+
+const changeQuantity = (req, res) => {
+  let id = req.params.id;
+  let qty = req.body.qty;
+  console.log(req.body);
+  Cart.findOneAndUpdate({ _id: id }, { qty: qty }).then((data) => {
+    res.status(200).send("Product updated Suuccessfull");
+  });
+};
+
+module.exports = { getCart, addToCart, removeById, emptyCart, changeQuantity };

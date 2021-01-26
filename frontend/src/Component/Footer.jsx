@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@material-ui/core";
+import { Box, Container, Divider, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -43,7 +34,7 @@ const useStyle = makeStyles((theme) => ({
     },
   },
   footer_container: {
-    margin: "0px 85px",
+    // margin: "0px 85px",
     margin: "auto",
   },
   icon: {
@@ -175,11 +166,17 @@ export function Footer() {
         <Grid container>
           <Grid xs></Grid>
           <Grid item xs={8} sm={8} md={4} lg={3}>
-            <Grid item sm>
+            <Grid item sm style={{ display: "flex", justifyContent: "center" }}>
               <NavLink to="/">
                 <FacebookIcon className={classes.icon} />
+              </NavLink>
+              <NavLink to="/">
                 <TwitterIcon className={classes.icon} />
+              </NavLink>
+              <NavLink to="/">
                 <InstagramIcon className={classes.icon} />
+              </NavLink>
+              <NavLink to="/">
                 <YouTubeIcon className={classes.icon} />
               </NavLink>
             </Grid>
@@ -190,7 +187,14 @@ export function Footer() {
         </Grid>
         <Grid container>
           <Grid item sm></Grid>
-          <Grid item xs={12} sm={10} md={4} lg={6}>
+          <Grid
+            item
+            xs={12}
+            sm={10}
+            md={4}
+            lg={6}
+            // style={{ display: "flex", justifyContent: "center" }}
+          >
             <svg
               // class="payment-icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -203,16 +207,16 @@ export function Footer() {
               <path
                 d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"
                 fill="#000"
-                fill-rule="nonzero"
+                fillRule="nonzero"
                 opacity=".07"></path>
               <path
                 d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"
                 fill="#FFF"
-                fill-rule="nonzero"></path>
+                fillRule="nonzero"></path>
               <path
                 d="M25.26 16.23c-1.697 1.48-4.157 2.27-6.275 2.27-2.97 0-5.644-1.3-7.666-3.463-.16-.17-.018-.402.173-.27 2.183 1.504 4.882 2.408 7.67 2.408 1.88 0 3.95-.46 5.85-1.416.288-.145.53.222.248.47v.001zm.706-.957c-.216-.328-1.434-.155-1.98-.078-.167.024-.193-.148-.043-.27.97-.81 2.562-.576 2.748-.305.187.272-.047 2.16-.96 3.063-.14.138-.272.064-.21-.12.205-.604.664-1.96.446-2.29h-.001z"
                 fill="#F90"
-                fill-rule="nonzero"></path>
+                fillRule="nonzero"></path>
               <path
                 d="M21.814 15.291c-.574-.498-.676-.73-.993-1.205-.947 1.012-1.618 1.315-2.85 1.315-1.453 0-2.587-.938-2.587-2.818 0-1.467.762-2.467 1.844-2.955.94-.433 2.25-.51 3.25-.628v-.235c0-.43.033-.94-.208-1.31-.212-.333-.616-.47-.97-.47-.66 0-1.25.353-1.392 1.085-.03.163-.144.323-.3.33l-1.677-.187c-.14-.033-.296-.153-.257-.38.386-2.125 2.223-2.766 3.867-2.766.84 0 1.94.234 2.604.9.842.82.762 1.918.762 3.11v2.818c0 .847.335 1.22.65 1.676.113.164.138.36-.003.482-.353.308-.98.88-1.326 1.2a.367.367 0 0 1-.414.038zm-1.659-2.533c.34-.626.323-1.214.323-1.918v-.392c-1.25 0-2.57.28-2.57 1.82 0 .782.386 1.31 1.05 1.31.487 0 .922-.312 1.197-.82z"
                 fill="#221F1F"></path>
@@ -291,7 +295,7 @@ export function Footer() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 38 24">
               <title id="pi-elo">Elo</title>
-              <g fill-rule="nonzero" fill="none">
+              <g fillRule="nonzero" fill="none">
                 <path
                   d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"
                   fill="#000"
@@ -345,8 +349,8 @@ export function Footer() {
               viewBox="0 0 38 24"
               xmlns="http://www.w3.org/2000/svg">
               <title id="pi-jcb">JCB</title>
-              <g fill="none" fill-rule="evenodd">
-                <g fill-rule="nonzero">
+              <g fill="none" fillRule="evenodd">
+                <g fillRule="nonzero">
                   <path
                     d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"
                     fill="#000"
@@ -367,7 +371,7 @@ export function Footer() {
                 <path
                   d="M10.755 14.5c-1.06 0-2.122-.304-2.656-.987l.78-.676c.068 1.133 3.545 1.24 3.545-.19V9.5h1.802v3.147c0 .728-.574 1.322-1.573 1.632-.466.144-1.365.221-1.898.221zm8.116 0c-.674 0-1.388-.107-1.965-.366-.948-.425-1.312-1.206-1.3-2.199.012-1.014.436-1.782 1.468-2.165 1.319-.49 3.343-.261 3.926.27v.972c-.572-.521-1.958-.898-2.919-.46-.494.226-.737.917-.744 1.448-.006.56.245 1.252.744 1.497.953.467 2.39.04 2.919-.441v1.01c-.358.255-1.253.434-2.129.434zm8.679-2.587c.37-.235.582-.567.582-1.005 0-.438-.116-.687-.348-.939-.206-.207-.58-.469-1.238-.469H23v5h3.546c.696 0 1.097-.23 1.315-.415.283-.25.426-.53.426-.96 0-.431-.155-.908-.737-1.212zm-1.906-.281h-1.428v-1.444h1.495c.956 0 .944 1.444-.067 1.444zm.288 2.157h-1.716v-1.513h1.716c.986 0 1.083 1.513 0 1.513z"
                   fill="#FFF"
-                  fill-rule="nonzero"></path>
+                  fillRule="nonzero"></path>
               </g>
             </svg>
             <svg
@@ -445,9 +449,9 @@ export function Footer() {
               role="img"
               aria-labelledby="pi-venmo">
               <title id="pi-venmo">Venmo</title>
-              <g fill="none" fill-rule="evenodd">
+              <g fill="none" fillRule="evenodd">
                 <rect
-                  fill-opacity=".07"
+                  fillOpacity=".07"
                   fill="#000"
                   width="38"
                   height="24"
@@ -458,7 +462,7 @@ export function Footer() {
                 <path
                   d="M24.675 8.36c0 3.064-2.557 7.045-4.633 9.84h-4.74L13.4 6.57l4.151-.402 1.005 8.275c.94-1.566 2.099-4.025 2.099-5.702 0-.918-.154-1.543-.394-2.058l3.78-.783c.437.738.634 1.499.634 2.46z"
                   fill="#FFF"
-                  fill-rule="nonzero"></path>
+                  fillRule="nonzero"></path>
               </g>
             </svg>
             <svg

@@ -109,7 +109,7 @@ export function Register() {
     setTimeout(() => {
       dispatch(setErrorFalse());
     }, 3000);
-  }, [err]);
+  }, [err, dispatch]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -119,7 +119,7 @@ export function Register() {
         history.push("/account/login");
       }
     }, 5000);
-  }, [register]);
+  }, [register, history, dispatch]);
 
   return !isAuth ? (
     <Container>
@@ -188,15 +188,18 @@ export function Register() {
                 />
               </div>
               <div>
-                {loading && <CircularProgress disableShrink />}
+                <div className={classes.btn_container}>
+                  {loading && <CircularProgress disableShrink />}
+                </div>
                 <input
                   type="submit"
                   className={classes.form_submit}
                   value="Create"
+                  disabled={loading ? true : false}
                 />
               </div>
             </form>
-            <div class={classes.link}>
+            <div className={classes.link}>
               <NavLink to="/account/login">Log in</NavLink>
             </div>
           </Grid>

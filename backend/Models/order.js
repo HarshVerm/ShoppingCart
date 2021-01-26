@@ -7,9 +7,17 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
+    address: {
+      type: Array,
+      required: true,
+    },
     order_list: {
       type: Array,
       required: true,
+    },
+    date: {
+      type: String,
+      default: Date.now,
     },
   },
   {

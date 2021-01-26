@@ -98,7 +98,7 @@ export function Login() {
     setTimeout(() => {
       dispatch(setErrorFalse());
     }, 3000);
-  }, [err]);
+  }, [err, dispatch]);
 
   return !isAuth ? (
     <Container>
@@ -139,8 +139,10 @@ export function Login() {
                   className={classes.form_input}
                 />
               </div>
-              <div className={classes.btn_container}>
-                {loading && <CircularProgress disableShrink />}
+              <div>
+                <div className={classes.btn_container}>
+                  {loading && <CircularProgress disableShrink />}
+                </div>
                 <input
                   type="submit"
                   className={classes.form_submit}

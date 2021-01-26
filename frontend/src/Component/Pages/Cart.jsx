@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Button,
   Container,
-  Divider,
   Grid,
   Table,
   Typography,
@@ -15,6 +14,12 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import {
+  getCartData,
+  removeProductById,
+  changeQuantity,
+} from "../../Redux/AddCart/actions";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   box_container: {
@@ -41,12 +46,11 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     borderTop: "1px solid black",
     width: "100%",
-    borderTop: "1px solid black",
   },
   counter: {
     border: "1px solid #656565",
     // position: "relative",
-    width: "40%",
+    width: "60px",
     display: "flex",
     justifyContent: "space-around",
   },
@@ -56,8 +60,6 @@ const useStyles = makeStyles((theme) => ({
   },
   placeOrder: {
     "& p": {
-      // fontSize: "1rem",
-      fontFamily: `"Roboto", "Helvetica", "Arial", "sans-serif"`,
       fontWeight: 400,
       lineHeight: 1,
       letterSpacing: "0.00938em",
@@ -79,14 +81,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Cart() {
-  let arr = false;
+  // let arr = false;
   const classes = useStyles();
-  const [qty, setQty] = useState(0);
-
+  // const [qty, setQty] = useState(0);
+  const user_id = useSelector((state) => state.users.user._id);
   const cart = useSelector((state) => state.cart.cart);
   const price = useSelector((state) => state.cart.totalPrice);
+  const dispatch = useDispatch();
 
-  console.log(cart);
+  useEffect(() => {
+    dispatch(getCartData(user_id));
+  }, [user_id, dispatch]);
+
+  useEffect(() => {}, [cart]);
+
+  const handleRemove = (id) => {
+    dispatch(removeProductById(id));
+    dispatch(getCartData(user_id));
+  };
+
+  const handleChange = (qty, id) => {
+    if (qty === 0) {
+      dispatch(removeProductById(id));
+    } else {
+      dispatch(changeQuantity({ qty, id }));
+    }
+    dispatch(getCartData(user_id));
+  };
+
   return (
     <Box className={classes.box_container}>
       <Container>
@@ -118,7 +140,7 @@ export function Cart() {
                   </TableHead>
                   <TableBody>
                     {cart?.map((item) => (
-                      <TableRow>
+                      <TableRow key={item._id}>
                         <TableCell>
                           <img src={`${item.img}`} width="100px" alt="" />
                         </TableCell>
@@ -132,27 +154,30 @@ export function Cart() {
                           <Typography
                             style={{ fontSize: "9px" }}
                             className={classes.remove}
-                            // onClick={}
-                          >
+                            onClick={() => handleRemove(item._id)}>
                             Remove
                           </Typography>
                         </TableCell>
                         <TableCell>${item.price}</TableCell>
                         <TableCell>
                           <div className={classes.counter}>
-                            {/* <span
+                            <span
                               className={classes.counter_item}
-                              onClick={(e) => handleClick(item.qty,-1,item.id)}>
+                              onClick={() =>
+                                handleChange(Number(item.qty) - 1, item._id)
+                              }>
                               -
-                            </span> */}
+                            </span>
                             <span style={{ margin: "0px 10px" }}>
                               {item.qty}
                             </span>
-                            {/* <span
+                            <span
                               className={classes.counter_item}
-                              onClick={(e) => setQty((prev) => prev + 1)}>
+                              onClick={() =>
+                                handleChange(Number(item.qty) + 1, item._id)
+                              }>
                               +
-                            </span> */}
+                            </span>
                           </div>
                         </TableCell>
                         <TableCell>${item.price * item.qty}</TableCell>
@@ -174,9 +199,11 @@ export function Cart() {
                 </Typography>
                 <Typography>Shipping & taxes calculated at checkout</Typography>
                 <Typography>
-                  <Button variant="outlined" className={classes.btn}>
-                    <span style={{ color: "white" }}>CHECK OUT</span>
-                  </Button>
+                  <NavLink to="/cart/checkout">
+                    <Button variant="outlined" className={classes.btn}>
+                      <span style={{ color: "white" }}>CHECK OUT</span>
+                    </Button>
+                  </NavLink>
                 </Typography>
               </div>
             </Grid>

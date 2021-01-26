@@ -31,7 +31,7 @@ export const loadData = (paylaod) => (dispatch) => {
 
   return axios(config)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(fetchSuccess(res.data));
     })
     .catch((err) => dispatch(fetchError()));

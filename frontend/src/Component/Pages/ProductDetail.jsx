@@ -43,7 +43,8 @@ export function ProductDetail() {
   const classes = useStyle();
   const history = useHistory();
   const id = history.location.search.split("?")[1];
-  const products = useSelector((state) => state.products.products);
+  // const products = useSelector((state) => state.products.products);
+  const user_id = useSelector((state) => state.users.user._id);
   const dispatch = useDispatch();
   let [product, setProduct] = useState({});
   useEffect(() => {
@@ -58,20 +59,22 @@ export function ProductDetail() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   // console.log(product);
   // console.log(Object.keys(product));
   const handleAdd = () => {
     let payload = {
       product_id: id,
+      user_id,
       product_name: product.product_name,
       img: product.img,
       size,
       price: product.price,
+      qty: Number(value),
     };
-    let qty = value;
-    dispatch(addToCart(payload, qty));
+
+    dispatch(addToCart(payload));
   };
 
   return (

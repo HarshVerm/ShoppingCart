@@ -1,5 +1,7 @@
 const User = require("../Models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
 const {
   registerValidation,
@@ -44,9 +46,9 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { error } = loginValidation(req.body);
-  console.log(error);
+  // console.log(error);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
@@ -63,6 +65,20 @@ const login = async (req, res, next) => {
     return res.status(400).send("Invalid password");
   }
   return res.status(200).send(user);
+  // console.log(user);
+  // let temp = {
+  //   _id: user._id,
+  //   first_name: user.first_name,
+  //   last_name: user.last_name,
+  //   email: user.email,
+  //   password: user.password,
+  //   addresses: [],
+  // };
+  // const accessToken = jwt.sign(temp, process.env.SECRET_KEY_TO_ACCESS, {
+  //   expiresIn: "1d",
+  // });
+  // // console.log(accessToken);
+  // res.json({ error: false, accessToken: accessToken });
 };
 
 module.exports = { register, login };

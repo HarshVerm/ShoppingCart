@@ -1,10 +1,18 @@
-import React from "react";
-import { ADD_TO_CART, REMOVE_FROM_CART } from "./actionTypes";
+import {
+  FETCH_CART_ERROR,
+  FETCH_CART_LOADING,
+  FETCH_CART_SUCCEESS,
+  SET_ADDTOCART_FALSE,
+  SET_ADDTOCART_TRUE,
+} from "./actionTypes";
 
 const init = {
   cart: [],
   totalPrice: 0,
   totalItem: 0,
+  cartLoading: false,
+  cartError: false,
+  addToCart: false,
 };
 
 const getTotal = (cart) => {
@@ -13,37 +21,44 @@ const getTotal = (cart) => {
   return { total, totaItems };
 };
 
-export const cartReducer = (state = init, { type, payload, qty }) => {
-  console.log(payload, qty);
-
+export const cartReducer = (state = init, { type, payload }) => {
   switch (type) {
-    case ADD_TO_CART:
-      const searchCart = state.cart.findIndex(
-        (items) => items.product_id === payload.product_id,
-      );
-      if (searchCart === -1) {
-        const cart = [...state.cart, { ...payload, qty }];
-        const total = getTotal(cart);
-        return {
-          ...state,
-          cart: cart,
-          totalPrice: total.total,
-          totalItem: total.totaItems,
-        };
-      } else {
-        const newCart = state.cart?.map((item, i) =>
-          i === searchCart
-            ? { ...item, qty: Number(item.qty) + Number(qty) }
-            : item,
-        );
-        const total = getTotal(newCart);
-        return {
-          ...state,
-          cart: [...newCart],
-          totalPrice: total.total,
-          totalItem: total.totaItems,
-        };
-      }
+    case FETCH_CART_SUCCEESS:
+      const total = getTotal(payload);
+      return {
+        ...state,
+        cart: payload,
+        totalPrice: total.total,
+        totalItem: total.totaItems,
+        cartLoading: false,
+        cartError: false,
+      };
+    case FETCH_CART_ERROR:
+      return {
+        ...state,
+        cartError: true,
+        cartLoading: false,
+      };
+    case FETCH_CART_LOADING:
+      return {
+        ...state,
+        // cart: [],
+        cartError: false,
+        cartLoading: true,
+        totalItem: 0,
+        totalPrice: 0,
+      };
+
+    case SET_ADDTOCART_FALSE:
+      return {
+        ...state,
+        addToCart: false,
+      };
+    case SET_ADDTOCART_TRUE:
+      return {
+        ...state,
+        adddToCart: true,
+      };
 
     default:
       return state;

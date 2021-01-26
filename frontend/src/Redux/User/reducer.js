@@ -16,7 +16,7 @@ const init = {
 };
 
 export const authReducer = (state = init, { type, payload }) => {
-  console.log(type, payload);
+  // console.log(type, payload);
   switch (type) {
     case FETCH_USER_SUCCESS:
       return {

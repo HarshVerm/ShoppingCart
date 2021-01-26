@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Box,
@@ -6,13 +6,13 @@ import {
   Typography,
   Grid,
   Toolbar,
+  Divider,
   useMediaQuery,
-  IconButton,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import { NavLink, Redirect, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -68,12 +68,24 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px",
     padding: "0px",
   },
+  small_view: {
+    padding: "10px 15px",
+  },
+  links: {
+    margin: "10px",
+    fontSize: "12px",
+  },
 }));
 
 export function NavBar() {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:700px)");
-  const history = useHistory();
+  const [open, setOpen] = useState(false);
+  // const history = useHistory();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [matches]);
 
   return (
     <AppBar className={classes.navbar}>
@@ -84,8 +96,8 @@ export function NavBar() {
               <NavLink to="/">
                 <img
                   src="//cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x.gif?v=1592267404"
-                  class="logo--color"
-                  srcset="//cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x.gif?v=1592267404 1x, //cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x@2x.gif?v=1592267404 2x"
+                  // class="logo--color"
+                  // srcset="//cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x.gif?v=1592267404 1x, //cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x@2x.gif?v=1592267404 2x"
                   style={{ paddingLeft: "10px", cursor: "pointer" }}
                   alt="KETNIPZ"
                 />
@@ -159,27 +171,51 @@ export function NavBar() {
         {!matches && (
           <Container>
             <Grid container className={classes.container_xs}>
-              <Grid item xs>
+              <Grid item xs onClick={(e) => setOpen(!open)}>
                 <MenuIcon className={classes.icon} />
               </Grid>
               <Grid item xs>
                 <img
                   src="//cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x.gif?v=1592267404"
                   className="logo--color"
-                  // srcSet="//cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x.gif?v=1592267404 1x, //cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x@2x.gif?v=1592267404 2x"
                   alt="KETNIPZ"
                 />
               </Grid>
               <Grid item xs className={classes.icon_right}>
-                <ShoppingCartOutlinedIcon
-                  className={classes.icon}
-                  color="disabled"
-                />
+                <NavLink to="/cart">
+                  <ShoppingCartOutlinedIcon
+                    className={classes.icon}
+                    color="disabled"
+                  />
+                </NavLink>
               </Grid>
             </Grid>
           </Container>
         )}
       </Toolbar>
+      {open && !matches && (
+        <Container className={classes.small_view}>
+          <NavLink to="/">
+            <div className={classes.links}>Home</div>
+          </NavLink>
+          <Divider />
+          <NavLink to="">
+            <div className={classes.links}>SHOP ALL</div>
+          </NavLink>
+          <Divider />
+          <NavLink to="">
+            <div className={classes.links}>FOOTWEAR</div>
+          </NavLink>
+          <Divider />
+          <NavLink to="">
+            <div className={classes.links}>TOPWEAR</div>
+          </NavLink>
+          <Divider />
+          <NavLink to="">
+            <div className={classes.links}>ACCESSORIES</div>
+          </NavLink>
+        </Container>
+      )}
     </AppBar>
   );
 }
