@@ -5,8 +5,11 @@ import {
   FETCH_LOGIN_SUCCESS,
   USER_LOGOUT,
   SET_ERROR,
+  SET_USER,
+  SET_TOKEN,
 } from "./actionTypes";
 import axios from "axios";
+import { getToken } from "../../Utils/localstorage";
 
 export const fetchUserSuccess = () => {
   return {
@@ -45,6 +48,18 @@ export const setErrorFalse = () => {
     type: SET_ERROR,
   };
 };
+export const setUser = (payload) => {
+  return {
+    type: SET_USER,
+    payload,
+  };
+};
+
+export const setTokenNull = () => {
+  return {
+    type: SET_TOKEN,
+  };
+};
 
 export const userRegister = (paylaod) => (dispatch) => {
   dispatch(fetchUserLoading());
@@ -60,18 +75,18 @@ export const userRegister = (paylaod) => (dispatch) => {
 
   axios(config)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch(fetchUserSuccess());
     })
     .catch((err) => {
-      console.log(err.response);
+      // console.log(err.response);
       dispatch(fetchUserError(err.response.data));
     });
 };
 
 export const loginUser = (paylaod) => (dispatch) => {
   dispatch(fetchUserLoading());
-  console.log(paylaod);
+  // console.log(paylaod);
   var config = {
     method: "POST",
     url: "http://localhost:5000/login",
@@ -82,10 +97,32 @@ export const loginUser = (paylaod) => (dispatch) => {
   };
 
   axios(config)
-    .then((res) => dispatch(fetchLoginSuccess(res.data)))
+    .then((res) => {
+      // console.log(res);
+
+      dispatch(fetchLoginSuccess(res.data.accessToken));
+    })
     .catch((err) => dispatch(fetchUserError(err.response.data)));
 };
 
 export const userLogout = () => (dispatch) => {
   dispatch(logout());
+};
+
+export const getActive = () => (dispatch) => {
+  var config = {
+    method: "get",
+    url: "http://localhost:5000/user",
+    headers: {
+      Authorization: `Bearer ${getToken("token")}`,
+    },
+  };
+
+  axios(config)
+    .then(function (response) {
+      dispatch(setUser(response.data));
+    })
+    .catch(function (error) {
+      dispatch(setTokenNull());
+    });
 };

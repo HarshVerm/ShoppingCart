@@ -4,3 +4,5 @@ export const FETCH_USER_ERROR = "FETCH_USER_ERROR";
 export const FETCH_LOGIN_SUCCESS = "FETCH_LOGIN_SUCCESS";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const SET_ERROR = "SET_ERROR";
+export const SET_USER = "SET_USER";
+export const SET_TOKEN = "SET_TOKEN";

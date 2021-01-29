@@ -7,9 +7,21 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
-    address: {
-      type: Array,
+    fname: {
+      type: String,
       required: true,
+    },
+    lname: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    shipping_address: {
+      type: Object,
+      // required: true,
     },
     order_list: {
       type: Array,

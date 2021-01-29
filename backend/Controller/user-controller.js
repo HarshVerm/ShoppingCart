@@ -7,6 +7,7 @@ const {
   registerValidation,
   loginValidation,
 } = require("../Middleware/validation");
+
 const { connect } = require("mongoose");
 
 const register = async (req, res, next) => {
@@ -64,24 +65,37 @@ const login = async (req, res, next) => {
   if (!validPass) {
     return res.status(400).send("Invalid password");
   }
-  return res.status(200).send(user);
+  // return res.status(200).send(user);
   // console.log(user);
-  // let temp = {
-  //   _id: user._id,
-  //   first_name: user.first_name,
-  //   last_name: user.last_name,
-  //   email: user.email,
-  //   password: user.password,
-  //   addresses: [],
-  // };
-  // const accessToken = jwt.sign(temp, process.env.SECRET_KEY_TO_ACCESS, {
-  //   expiresIn: "1d",
-  // });
-  // // console.log(accessToken);
-  // res.json({ error: false, accessToken: accessToken });
+  let temp = {
+    id: user._id,
+    // first_name: user.first_name,
+    // last_name: user.last_name,
+    // email: user.email,
+    // password: user.password,
+    // addresses: [],
+  };
+  const accessToken = jwt.sign(temp, process.env.SECRET_KEY_TO_ACCESS, {
+    expiresIn: "1d",
+  });
+  // console.log(accessToken);
+  res.json({ accessToken: accessToken });
 };
 
-module.exports = { register, login };
+const getUser = (req, res) => {
+  User.findOne({ _id: req.id.id }).then((data) => {
+    data = {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      addresses: data.addresses,
+      email: data.email,
+      id: data._id,
+    };
+    res.status(200).send(data);
+    res.end();
+  });
+};
+module.exports = { register, login, getUser };
 
 //
 // const register = async (req, res, next) => {

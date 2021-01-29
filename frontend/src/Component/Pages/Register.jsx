@@ -89,7 +89,7 @@ export function Register() {
   const history = useHistory();
   const err = useSelector((state) => state.users.isError);
   const errMsg = useSelector((state) => state.users.error);
-  const isAuth = useSelector((state) => state.users.isAuth);
+  const token = useSelector((state) => state.users.token);
   const register = useSelector((state) => state.users.register);
   const loading = useSelector((state) => state.users.isLoading);
 
@@ -121,7 +121,7 @@ export function Register() {
     }, 5000);
   }, [register, history, dispatch]);
 
-  return !isAuth ? (
+  return !token ? (
     <Container>
       <Grid container className={classes.form_container}>
         <Grid item xs></Grid>
@@ -189,13 +189,13 @@ export function Register() {
               </div>
               <div>
                 <div className={classes.btn_container}>
-                  {loading && <CircularProgress disableShrink />}
+                  {/* {loading && <CircularProgress disableShrink />} */}
                 </div>
                 <input
                   type="submit"
                   className={classes.form_submit}
                   value="Create"
-                  disabled={loading ? true : false}
+                  // disabled={loading ? true : false}
                 />
               </div>
             </form>

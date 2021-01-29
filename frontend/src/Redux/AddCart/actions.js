@@ -4,9 +4,12 @@ import {
   FETCH_CART_LOADING,
   SET_ADDTOCART_FALSE,
   SET_ADDTOCART_TRUE,
+  SET_EMPTY,
 } from "./actionTypes";
 import axios from "axios";
-// import { fetchSuccess } from "../LoadData/actions";
+import { getToken, saveData } from "../../Utils/localstorage";
+import { setTokenNull } from "../User/actions";
+// import { fetchSuccess } from "../getToken/actions";
 
 export const addSuccess = (payload) => {
   return {
@@ -37,14 +40,21 @@ export const fetchLoading = () => {
     type: FETCH_CART_LOADING,
   };
 };
+export const setCartEmpty = () => {
+  return {
+    type: SET_EMPTY,
+  };
+};
 
 export const getCartData = (payload) => (dispatch) => {
   dispatch(fetchLoading());
 
   var config = {
     method: "get",
-    url: `http://localhost:5000/cart/${payload}`,
-    headers: {},
+    url: `http://localhost:5000/cart`,
+    headers: {
+      authorization: `Bearer ${getToken("token")}`,
+    },
   };
 
   axios(config)
@@ -52,7 +62,9 @@ export const getCartData = (payload) => (dispatch) => {
       dispatch(addSuccess(res.data));
     })
     .catch(() => {
+      saveData("token", null);
       dispatch(fetchError());
+      dispatch(setTokenNull());
     });
 };
 
@@ -63,6 +75,7 @@ export const addToCart = (payload) => (dispatch) => {
     url: `http://localhost:5000/addToCart`,
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${getToken("token")}`,
     },
     data: payload,
   };
@@ -113,6 +126,22 @@ export const changeQuantity = (payload) => (dispatch) => {
 
 export const removecart = (payload) => (dispatch) => {
   dispatch(fetchLoading());
+  var config = {
+    method: "delete",
+    url: `http://localhost:5000/removeCart/${payload}`,
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${getToken("token")}`,
+    },
+  };
+
+  axios(config)
+    .then(() => {
+      dispatch(setCartEmpty());
+    })
+    .catch((error) => {
+      dispatch(fetchError());
+    });
 };
 
 // export const

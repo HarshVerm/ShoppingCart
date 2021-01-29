@@ -1,3 +1,4 @@
+import { getToken, saveData } from "../../Utils/localstorage";
 import {
   FETCH_USER_ERROR,
   FETCH_USER_LOADING,
@@ -5,7 +6,10 @@ import {
   FETCH_LOGIN_SUCCESS,
   USER_LOGOUT,
   SET_ERROR,
+  SET_USER,
+  SET_TOKEN,
 } from "./actionTypes";
+
 const init = {
   user: {},
   isLoading: false,
@@ -13,6 +17,7 @@ const init = {
   register: false,
   isAuth: false,
   error: null,
+  token: getToken("token") || null,
 };
 
 export const authReducer = (state = init, { type, payload }) => {
@@ -42,19 +47,22 @@ export const authReducer = (state = init, { type, payload }) => {
         error: null,
       };
     case FETCH_LOGIN_SUCCESS:
+      let data = payload;
+      saveData("token", data);
       return {
         ...state,
         isLoading: true,
         isError: false,
         isAuth: true,
-        user: payload,
+        token: data,
         error: null,
       };
     case USER_LOGOUT:
+      saveData("token", null);
       return {
         ...state,
-        isAuth: false,
-        user: null,
+        token: null,
+        user: {},
       };
     case SET_ERROR:
       return {
@@ -62,6 +70,17 @@ export const authReducer = (state = init, { type, payload }) => {
         isError: false,
         error: null,
         register: false,
+      };
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: null,
+        user: {},
+      };
+    case SET_USER:
+      return {
+        ...state,
+        user: payload,
       };
     default:
       return state;

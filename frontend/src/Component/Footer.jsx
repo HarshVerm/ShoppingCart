@@ -74,7 +74,7 @@ const useStyle = makeStyles((theme) => ({
 export function Footer() {
   const classes = useStyle();
   return (
-    <Box className={classes.footer} container>
+    <Box className={classes.footer}>
       <Container className={classes.footer_container}>
         <Grid container>
           <Grid
@@ -164,7 +164,7 @@ export function Footer() {
       </Container>
       <Container>
         <Grid container>
-          <Grid xs></Grid>
+          <Grid item xs></Grid>
           <Grid item xs={8} sm={8} md={4} lg={3}>
             <Grid item sm style={{ display: "flex", justifyContent: "center" }}>
               <NavLink to="/">

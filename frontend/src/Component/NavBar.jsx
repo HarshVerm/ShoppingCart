@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -38,10 +39,6 @@ const useStyles = makeStyles((theme) => ({
     "& :hover": {
       color: "#cc588a",
     },
-
-    // '& @media only screen and (max-width: 800px)':{
-    //     display:"none"
-    // }
   },
   container_item: {
     fontSize: "9px",
@@ -81,6 +78,7 @@ export function NavBar() {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:700px)");
   const [open, setOpen] = useState(false);
+  const token = useSelector((state) => state.users.token);
   // const history = useHistory();
 
   useEffect(() => {
@@ -92,7 +90,7 @@ export function NavBar() {
       <Toolbar>
         {matches && (
           <Grid container className={classes.container}>
-            <Grid item sm={3} xs={0} md={3} lg={3} xl={3}>
+            <Grid item sm={3} md={3} lg={3} xl={3}>
               <NavLink to="/">
                 <img
                   src="//cdn.shopify.com/s/files/1/2028/6907/files/Ketnipz_Header_550x_dd3e502e-9e2e-4ad6-8c4d-e7cadd42b578_130x.gif?v=1592267404"
@@ -104,7 +102,7 @@ export function NavBar() {
               </NavLink>
             </Grid>
             <Grid item sm></Grid>
-            <Grid item sm={7} xs={0} md={5} lg={6} xl={6}>
+            <Grid item sm={7} md={5} lg={6} xl={6}>
               <Box
                 className={classes.container_right}
                 display={{ xs: "none", sm: "block", md: "block" }}>
@@ -155,15 +153,17 @@ export function NavBar() {
                     ACCESSORIES
                   </Typography>
                 </NavLink>
-                <Typography className={classes.container_item} variant="h6">
-                  <NavLink
-                    to="/cart"
-                    activeStyle={{
-                      color: "#cc588a",
-                    }}>
-                    CART
-                  </NavLink>
-                </Typography>
+                {token && (
+                  <Typography className={classes.container_item} variant="h6">
+                    <NavLink
+                      to="/cart"
+                      activeStyle={{
+                        color: "#cc588a",
+                      }}>
+                      CART
+                    </NavLink>
+                  </Typography>
+                )}
               </Box>
             </Grid>
           </Grid>
@@ -182,12 +182,14 @@ export function NavBar() {
                 />
               </Grid>
               <Grid item xs className={classes.icon_right}>
-                <NavLink to="/cart">
-                  <ShoppingCartOutlinedIcon
-                    className={classes.icon}
-                    color="disabled"
-                  />
-                </NavLink>
+                {token && (
+                  <NavLink to="/cart">
+                    <ShoppingCartOutlinedIcon
+                      className={classes.icon}
+                      color="disabled"
+                    />
+                  </NavLink>
+                )}
               </Grid>
             </Grid>
           </Container>

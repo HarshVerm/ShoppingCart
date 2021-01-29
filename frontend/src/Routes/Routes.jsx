@@ -19,8 +19,12 @@ export function Routes() {
       <Route path="/" render={(props) => <Header {...props} />} />
       <Route path="/" render={(props) => <NavBar {...props} />} />
       <Switch>
-        <PrivateRoute exact path="/cart" Component={Cart} />
-        <PrivateRoute exact path="/profile" Component={Profile} />
+        <Route exact path="/cart" render={(props) => <Cart {...props} />} />
+        <Route
+          exact
+          path="/profile"
+          render={(props) => <Profile {...props} />}
+        />
         <Route
           path="/product"
           exact
@@ -37,7 +41,11 @@ export function Routes() {
           exact
           render={(props) => <Register {...props} />}
         />
-        <PrivateRoute exact path="/cart/checkout" Component={Checkout} />
+        <Route
+          exact
+          path="/cart/checkout"
+          render={(props) => <Checkout {...props} />}
+        />
         <Route
           path="/contact-us"
           exact

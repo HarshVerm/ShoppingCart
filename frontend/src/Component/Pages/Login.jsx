@@ -86,21 +86,21 @@ export function Login() {
   const classes = useStyle();
   const err = useSelector((state) => state.users.isError);
   const errMsg = useSelector((state) => state.users.error);
-  const isAuth = useSelector((state) => state.users.isAuth);
+  const token = useSelector((state) => state.users.token);
   const loading = useSelector((state) => state.users.isLoading);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
-  console.log(isAuth);
+  // console.log(token);
   useEffect(() => {
     setTimeout(() => {
       dispatch(setErrorFalse());
     }, 3000);
   }, [err, dispatch]);
 
-  return !isAuth ? (
+  return !token ? (
     <Container>
       <Grid container className={classes.form_container}>
         <Grid item xs></Grid>
@@ -141,13 +141,13 @@ export function Login() {
               </div>
               <div>
                 <div className={classes.btn_container}>
-                  {loading && <CircularProgress disableShrink />}
+                  {/* {loading && <CircularProgress disableShrink />} */}
                 </div>
                 <input
                   type="submit"
                   className={classes.form_submit}
                   value="Sign In"
-                  disabled={loading ? true : false}
+                  // disabled={loading ? true : false}
                 />
               </div>
             </form>

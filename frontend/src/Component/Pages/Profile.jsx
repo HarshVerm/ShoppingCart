@@ -2,8 +2,10 @@ import { Container, Box, Grid, Button, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
-import { NavLink } from "react-router-dom";
-import { userLogout } from "../../Redux/User/actions";
+import { NavLink, Redirect } from "react-router-dom";
+import { getActive, userLogout } from "../../Redux/User/actions";
+import { setCartEmpty } from "../../Redux/AddCart/actions";
+import { getToken } from "../../Utils/localstorage";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -44,12 +46,18 @@ export const Profile = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.user);
+  const token = useSelector((state) => state.users.token);
   const handleLogout = () => {
     dispatch(userLogout());
+    dispatch(setCartEmpty());
   };
+  React.useEffect(() => {
+    if (token) dispatch(getActive());
+  }, []);
 
   return (
     <Box className={classes.wrapper}>
+      {!token && <Redirect to="/account/login" />}
       <Container className={classes.container}>
         <Grid container>
           <Grid item sm={2}></Grid>

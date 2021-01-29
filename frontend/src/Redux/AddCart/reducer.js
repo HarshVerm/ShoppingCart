@@ -4,6 +4,7 @@ import {
   FETCH_CART_SUCCEESS,
   SET_ADDTOCART_FALSE,
   SET_ADDTOCART_TRUE,
+  SET_EMPTY,
 } from "./actionTypes";
 
 const init = {
@@ -57,7 +58,12 @@ export const cartReducer = (state = init, { type, payload }) => {
     case SET_ADDTOCART_TRUE:
       return {
         ...state,
-        adddToCart: true,
+        addToCart: true,
+      };
+    case SET_EMPTY:
+      return {
+        ...state,
+        cart: [],
       };
 
     default:

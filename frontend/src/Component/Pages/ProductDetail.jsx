@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import {
   Grid,
   Container,
@@ -35,7 +37,18 @@ const useStyle = makeStyles((theme) => ({
   counter_item: {
     cursor: "pointer",
   },
+  alert: {
+    color: `white !important`,
+    "& div": { color: "white" },
+    "& p": {
+      color: "white",
+    },
+  },
 }));
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export function ProductDetail() {
   const [value, setValue] = useState(1);
@@ -47,6 +60,8 @@ export function ProductDetail() {
   const user_id = useSelector((state) => state.users.user._id);
   const dispatch = useDispatch();
   let [product, setProduct] = useState({});
+  let [open, setOpen] = useState(false);
+  let [vertical, horizontal] = ["top", "center"];
   useEffect(() => {
     var config = {
       method: "get",
@@ -66,7 +81,6 @@ export function ProductDetail() {
   const handleAdd = () => {
     let payload = {
       product_id: id,
-      user_id,
       product_name: product.product_name,
       img: product.img,
       size,
@@ -75,11 +89,26 @@ export function ProductDetail() {
     };
 
     dispatch(addToCart(payload));
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
     Object.keys(product).length > 0 && (
       <Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={111113000}
+          onClose={handleClose}
+          className={classes.alert}
+          anchorOrigin={{ vertical, horizontal }}>
+          <Alert onClose={handleClose} severity="success">
+            <p>Add to cart!</p>
+          </Alert>
+        </Snackbar>
         <Container>
           <Box>
             <Breadcrumbs

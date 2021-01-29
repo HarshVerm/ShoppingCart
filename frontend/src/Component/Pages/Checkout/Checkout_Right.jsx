@@ -1,19 +1,14 @@
 import React from "react";
 import {
   Badge,
-  MenuItem,
-  Snackbar,
   Typography,
   Box,
   Grid,
-  Container,
-  TextField,
   Divider,
   TableBody,
   TableCell,
   TableRow,
   Table,
-  Breadcrumbs,
 } from "@material-ui/core";
 import { NavLink, Redirect, useHistory, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
@@ -112,12 +107,12 @@ export function Checkout_Right() {
   const user = useSelector((state) => state.users.user);
   const classes = useStyle();
   return (
-    <Grid xs md={5} className={classes.right_container}>
+    <Grid item xs md={5} className={classes.right_container}>
       <Box>
         <Table>
           <TableBody>
             {cart?.map((item) => (
-              <TableRow>
+              <TableRow key={item._id}>
                 <TableCell className={classes.table_cell}>
                   <Badge
                     color="secondary"
@@ -131,7 +126,7 @@ export function Checkout_Right() {
                   </Badge>
                 </TableCell>
                 <TableCell
-                  classes={classes.product_name}
+                  className={classes.product_name}
                   style={{ borderBottom: "none" }}>
                   <div
                     style={{
@@ -167,7 +162,7 @@ export function Checkout_Right() {
           <button className={classes.btn}>Apply</button>
         </Typography>
         <Divider />
-        <Typography className={classes.footer_container}>
+        <div className={classes.footer_container}>
           <div
             style={{
               display: "flex",
@@ -188,12 +183,12 @@ export function Checkout_Right() {
             <div>Shipping </div>
             <div>Calculated at next step </div>
           </div>
-        </Typography>
+        </div>
         <Divider />
-        <Typography className={classes.container_amt}>
+        <div className={classes.container_amt}>
           <div>Total</div>
           <div>${totalAmt}</div>
-        </Typography>
+        </div>
       </Box>
     </Grid>
   );

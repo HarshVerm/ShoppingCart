@@ -5,6 +5,9 @@ import { makeStyles } from "@material-ui/styles";
 import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { loadData } from "../../Redux/LoadData/actions";
+import { getActive } from "../../Redux/User/actions";
+import { getToken } from "../../Utils/localstorage";
+import { getCartData } from "../../Redux/AddCart/actions";
 
 const useStyle = makeStyles((theme) => ({
   body_container: {
@@ -26,9 +29,14 @@ export function Home() {
   const classes = useStyle();
   // const match = useMediaQuery("(min-width:700px)");
   const products = useSelector((state) => state.products.products);
+  const token = getToken("token");
 
   useEffect(() => {
     dispatch(loadData());
+    if (token) {
+      dispatch(getActive());
+      dispatch(getCartData());
+    }
   }, [dispatch]);
 
   const handleClick = (_id, item = null) => {
@@ -52,7 +60,7 @@ export function Home() {
       </div>
       <Container>
         <Grid container className={classes.body_container}>
-          {products.map((item) => (
+          {products?.map((item) => (
             <Grid
               item
               xs={6}

@@ -1,17 +1,25 @@
 const Cart = require("../Models/cart");
 
+// const getCart = (req, res) => {
+//   const id = req.params.id;
+//   //   const cart = req.body;
+//   console.log(req.params);
+//   Cart.find({ user_id: id }).then((data) => {
+//     res.status(200).send(data);
+//     res.end();
+//   });
+// };
+
 const getCart = (req, res) => {
-  const id = req.params.id;
-  //   const cart = req.body;
-  console.log(req.params);
-  Cart.find({ user_id: id }).then((data) => {
+  console.log(req.id.id);
+  Cart.find({ user_id: req.id.id }).then((data) => {
     res.status(200).send(data);
     res.end();
   });
 };
 
 const addToCart = async (req, res) => {
-  const id = req.body.user_id;
+  const id = req.id.id;
   const product = req.body.product_id;
   let qty = req.body.qty;
   console.log(req.body);
@@ -28,7 +36,7 @@ const addToCart = async (req, res) => {
         res.status(200).send(data);
       });
     } else {
-      const newCart = new Cart(req.body);
+      const newCart = new Cart({ ...req.body, user_id: id });
       newCart.save().then((data) => {
         res.status(200).status(200).send(data);
       });

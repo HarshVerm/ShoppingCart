@@ -19,7 +19,7 @@ import {
   removeProductById,
   changeQuantity,
 } from "../../Redux/AddCart/actions";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   box_container: {
@@ -87,17 +87,18 @@ export function Cart() {
   const user_id = useSelector((state) => state.users.user._id);
   const cart = useSelector((state) => state.cart.cart);
   const price = useSelector((state) => state.cart.totalPrice);
+  const token = useSelector((state) => state.users.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCartData(user_id));
-  }, [user_id, dispatch]);
+    dispatch(getCartData());
+  }, [dispatch]);
 
-  useEffect(() => {}, [cart]);
+  // useEffect(() => {}, [cart]);
 
   const handleRemove = (id) => {
     dispatch(removeProductById(id));
-    dispatch(getCartData(user_id));
+    dispatch(getCartData());
   };
 
   const handleChange = (qty, id) => {
@@ -106,12 +107,13 @@ export function Cart() {
     } else {
       dispatch(changeQuantity({ qty, id }));
     }
-    dispatch(getCartData(user_id));
+    dispatch(getCartData());
   };
 
   return (
     <Box className={classes.box_container}>
       <Container>
+        {!token && <Redirect to="/account/login" />}
         {cart.length === 0 ? (
           <Grid container className={classes.empty_cart}>
             <Typography>YOUR CART</Typography>
