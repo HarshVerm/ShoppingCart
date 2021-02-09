@@ -19,14 +19,20 @@
 
 
 ## <code>Sneak Peak</code>
-## <code>Landing Page</code>
-![img](./screenshots/1.png)
-
 ## <code>Home Page</code>
-![img](./screenshots/2.png)
+![img](./screenshot/1.png)
 
-## <code>TV Show</code>
-![img](./screenshots/3.png)
+## <code>Product Details</code>
+![img](./screenshot/2.png)
+
+## <code>Cart</code>
+![img](./screenshot/3.png)
+
+## <code>Place Order</code>
+![img](./screenshot/4.png)
+
+## <code>Make Payment</code>
+![img](./screenshot/5.png)
 
 ### Installation and Setup Instructions
 
