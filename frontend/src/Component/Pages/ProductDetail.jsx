@@ -56,7 +56,7 @@ export function ProductDetail() {
   const classes = useStyle();
   const history = useHistory();
   const id = history.location.search.split("?")[1];
-  // const products = useSelector((state) => state.products.products);
+  const token = useSelector((state) => state.users.token);
   const user_id = useSelector((state) => state.users.user._id);
   const dispatch = useDispatch();
   let [product, setProduct] = useState({});
@@ -79,17 +79,24 @@ export function ProductDetail() {
   // console.log(product);
   // console.log(Object.keys(product));
   const handleAdd = () => {
-    let payload = {
-      product_id: id,
-      product_name: product.product_name,
-      img: product.img,
-      size,
-      price: product.price,
-      qty: Number(value),
-    };
+    if (token) {
+      let payload = {
+        product_id: id,
+        product_name: product.product_name,
+        img: product.img,
+        size,
+        price: product.price,
+        qty: Number(value),
+      };
 
-    dispatch(addToCart(payload));
-    setOpen(true);
+      dispatch(addToCart(payload));
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false);
+      }, 1000);
+    } else {
+      history.push("/account/login");
+    }
   };
 
   const handleClose = () => {

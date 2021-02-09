@@ -120,7 +120,12 @@ export function Checkout_Right() {
                     badgeContent={item.qty}>
                     <div className={classes.img_container}>
                       <div>
-                        <img className={classes.img} src={item.img} alt="" />
+                        <img
+                          className={classes.img}
+                          src={item.img}
+                          alt=""
+                          loading="lazy"
+                        />
                       </div>
                     </div>
                   </Badge>

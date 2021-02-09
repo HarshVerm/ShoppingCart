@@ -102,74 +102,87 @@ export const Checkout = () => {
   }, []);
 
   const paymentHandler = async () => {
-    console.log(totalPrice);
-    const API_URL = `http://localhost:5000/`;
-    var config = {
-      method: "POST",
-      url: `${API_URL}order`,
-      headers: {
-        Authorization: `Bearer ${getToken("token")}`,
-      },
-      data: { totalPrice },
-    };
-    // const orderUrl = `${API_URL}order`;
-    const response = await axios(config);
-    const { data } = response;
-    const options = {
-      name: "Masai Razorpay",
-      description: "Integration of Razorpay",
-      order_id: data.id,
-      handler: async (response) => {
-        try {
-          const paymentId = response.razorpay_payment_id;
-          console.log(paymentId);
-          const shipping_address = {
-            company,
-            pin,
-            state,
-            city,
-            address: add,
-          };
-          let payload = {
-            user_id: user.id,
-            fname,
-            lname,
-            shipping_address,
-            phone,
-            order_list: cart,
-            totalPrice,
-          };
+    if (
+      fname == "" ||
+      lname == "" ||
+      company == "" ||
+      counrty == "" ||
+      pin == "" ||
+      state == "" ||
+      city == "" ||
+      add == "" ||
+      phone == ""
+    ) {
+      alert("fill all details");
+    } else {
+      const API_URL = `http://localhost:5000/`;
+      var config = {
+        method: "POST",
+        url: `${API_URL}order`,
+        headers: {
+          Authorization: `Bearer ${getToken("token")}`,
+        },
+        data: { totalPrice },
+      };
+      // const orderUrl = `${API_URL}order`;
+      const response = await axios(config);
+      const { data } = response;
+      const options = {
+        name: "Masai Razorpay",
+        description: "Integration of Razorpay",
+        order_id: data.id,
+        handler: async (response) => {
+          try {
+            const paymentId = response.razorpay_payment_id;
+            console.log(paymentId);
+            const shipping_address = {
+              company,
+              pin,
+              state,
+              city,
+              address: add,
+            };
+            let payload = {
+              user_id: user.id,
+              fname,
+              lname,
+              shipping_address,
+              phone,
+              order_list: cart,
+              totalPrice,
+            };
 
-          var config = {
-            method: "POST",
-            url: `${API_URL}capture/&{payment}`,
-            headers: {
-              Authorization: `Bearer ${getToken("token")}`,
-            },
-            data: payload,
-          };
+            var config = {
+              method: "POST",
+              url: `${API_URL}capture/&{payment}`,
+              headers: {
+                Authorization: `Bearer ${getToken("token")}`,
+              },
+              data: payload,
+            };
 
-          // const url = `${API_URL}capture/&{payment}`;
-          await axios(config)
-            .then(() => {
-              console.log("success");
-              dispatch(removecart(user.id));
-              setTimeout(() => {
+            // const url = `${API_URL}capture/&{payment}`;
+            await axios(config)
+              .then(() => {
+                console.log("success");
                 alert("Suuccess");
-                history.push("/");
-              }, 3000);
-            })
-            .catch((err) => console.log("fail"));
-        } catch (err) {
-          console.log(err);
-        }
-      },
-      theme: {
-        color: "#c6203d",
-      },
-    };
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
+                setTimeout(() => {
+                  dispatch(removecart(user.id));
+                  history.push("/");
+                }, 2000);
+              })
+              .catch((err) => console.log("fail"));
+          } catch (err) {
+            console.log(err);
+          }
+        },
+        theme: {
+          color: "#c6203d",
+        },
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    }
   };
 
   return (

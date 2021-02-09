@@ -102,7 +102,10 @@ export const loginUser = (paylaod) => (dispatch) => {
 
       dispatch(fetchLoginSuccess(res.data.accessToken));
     })
-    .catch((err) => dispatch(fetchUserError(err.response.data)));
+    .catch((err) => {
+      console.log(err.response);
+      dispatch(fetchUserError(err.response));
+    });
 };
 
 export const userLogout = () => (dispatch) => {
