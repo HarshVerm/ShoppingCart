@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "none",
     borderBottom: "1px solid #f7f4f4",
     position: "sticky",
-    color: "black",
     top: 0,
+    color: "black",
   },
   container: {
     display: "flex",

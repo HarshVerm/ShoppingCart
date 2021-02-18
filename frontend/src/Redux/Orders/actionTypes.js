@@ -1,0 +1,2 @@
+export const EMPTY_ORDER_LIST = "EMPTY_ORDER_LIST";
+export const ALL_ORDER_BY_USER = "ALL_ORDER_BY_USER";

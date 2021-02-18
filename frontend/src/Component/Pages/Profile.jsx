@@ -6,6 +6,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import { getActive, userLogout } from "../../Redux/User/actions";
 import { setCartEmpty } from "../../Redux/AddCart/actions";
 import { getToken } from "../../Utils/localstorage";
+import { getOrders, emptyOrder } from "../../Redux/Orders/actions";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -46,13 +47,24 @@ export const Profile = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.user);
+  // const user = useSelector((state) => state.users.user);
   const token = useSelector((state) => state.users.token);
+  const { orders } = useSelector((state) => state.orders);
   const handleLogout = () => {
     dispatch(userLogout());
     dispatch(setCartEmpty());
+    dispatch(emptyOrder());
   };
   React.useEffect(() => {
-    if (token) dispatch(getActive());
+    if (token) {
+      dispatch(getActive());
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (token && user.id) {
+      dispatch(getOrders({ id: user.id }));
+    }
   }, []);
 
   return (
@@ -93,7 +105,14 @@ export const Profile = () => {
                   ORDER HISTORY
                 </Typography>
                 <Typography className={classes.title}>
-                  You haven't placed any order yet
+                  {orders.length > 0 ? (
+                    <>
+                      <h5>Total Orders Placed:</h5>
+                      <label>{orders.length}</label>
+                    </>
+                  ) : (
+                    <p> You haven't placed any order yet</p>
+                  )}
                 </Typography>
               </Grid>
               <Grid item xs></Grid>
