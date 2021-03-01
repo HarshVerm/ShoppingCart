@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, CircularProgress } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../../Redux/User/actions";
@@ -91,7 +91,7 @@ export function Register() {
   const errMsg = useSelector((state) => state.users.error);
   const token = useSelector((state) => state.users.token);
   const register = useSelector((state) => state.users.register);
-  const loading = useSelector((state) => state.users.isLoading);
+  // const loading = useSelector((state) => state.users.isLoading);
 
   const handleSumit = (e) => {
     e.preventDefault();

@@ -10,7 +10,7 @@ import {
   TableRow,
   Table,
 } from "@material-ui/core";
-import { NavLink, Redirect, useHistory, Link } from "react-router-dom";
+// import { NavLink, Redirect, useHistory, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import { useSelector } from "react-redux";
 
@@ -101,10 +101,10 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-export function Checkout_Right() {
+export function CheckoutRight() {
   const cart = useSelector((state) => state.cart.cart);
   const totalAmt = useSelector((state) => state.cart.totalPrice);
-  const user = useSelector((state) => state.users.user);
+  // const user = useSelector((state) => state.users.user);
   const classes = useStyle();
   return (
     <Grid item xs md={5} className={classes.right_container}>

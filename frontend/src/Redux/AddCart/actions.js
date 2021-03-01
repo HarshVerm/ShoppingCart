@@ -51,7 +51,7 @@ export const getCartData = (payload) => (dispatch) => {
 
   var config = {
     method: "get",
-    url: `http://localhost:5000/cart`,
+    url: `https://shoppingcart991.herokuapp.com/cart`,
     headers: {
       authorization: `Bearer ${getToken("token")}`,
     },
@@ -72,7 +72,7 @@ export const addToCart = (payload) => (dispatch) => {
   dispatch(fetchLoading());
   var config = {
     method: "post",
-    url: `http://localhost:5000/addToCart`,
+    url: `https://shoppingcart991.herokuapp.com/addToCart`,
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${getToken("token")}`,
@@ -93,7 +93,7 @@ export const removeProductById = (payload) => (dispatch) => {
   dispatch(fetchLoading());
   var config = {
     method: "delete",
-    url: `http://localhost:5000/removeProduct/${payload}`,
+    url: `https://shoppingcart991.herokuapp.com/removeProduct/${payload}`,
     headers: {},
   };
 
@@ -110,7 +110,7 @@ export const changeQuantity = (payload) => (dispatch) => {
 
   var config = {
     method: "put",
-    url: `http://localhost:5000/changeQuantity/${id}`,
+    url: `https://shoppingcart991.herokuapp.com/changeQuantity/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -128,7 +128,7 @@ export const removecart = (payload) => (dispatch) => {
   dispatch(fetchLoading());
   var config = {
     method: "delete",
-    url: `http://localhost:5000/removeCart/${payload}`,
+    url: `https://shoppingcart991.herokuapp.com/removeCart/${payload}`,
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${getToken("token")}`,

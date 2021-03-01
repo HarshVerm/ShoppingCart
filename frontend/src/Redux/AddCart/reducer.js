@@ -46,8 +46,8 @@ export const cartReducer = (state = init, { type, payload }) => {
         // cart: [],
         cartError: false,
         cartLoading: true,
-        totalItem: 0,
-        totalPrice: 0,
+        // totalItem: 0,
+        // totalPrice: 0,
       };
 
     case SET_ADDTOCART_FALSE:

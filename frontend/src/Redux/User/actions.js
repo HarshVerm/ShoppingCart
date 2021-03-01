@@ -66,7 +66,7 @@ export const userRegister = (paylaod) => (dispatch) => {
 
   var config = {
     method: "post",
-    url: "http://localhost:5000/register",
+    url: "https://shoppingcart991.herokuapp.com/register",
     headers: {
       "Content-Type": "application/json",
     },
@@ -89,7 +89,7 @@ export const loginUser = (paylaod) => (dispatch) => {
   // console.log(paylaod);
   var config = {
     method: "POST",
-    url: "http://localhost:5000/login",
+    url: "https://shoppingcart991.herokuapp.com/login",
     headers: {
       "Content-Type": "application/json",
     },
@@ -115,7 +115,7 @@ export const userLogout = () => (dispatch) => {
 export const getActive = () => (dispatch) => {
   var config = {
     method: "get",
-    url: "http://localhost:5000/user",
+    url: "https://shoppingcart991.herokuapp.com/user",
     headers: {
       Authorization: `Bearer ${getToken("token")}`,
     },

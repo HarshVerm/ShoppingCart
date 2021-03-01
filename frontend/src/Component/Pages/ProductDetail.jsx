@@ -57,7 +57,7 @@ export function ProductDetail() {
   const history = useHistory();
   const id = history.location.search.split("?")[1];
   const token = useSelector((state) => state.users.token);
-  const user_id = useSelector((state) => state.users.user._id);
+  // const user_id = useSelector((state) => state.users.user._id);
   const dispatch = useDispatch();
   let [product, setProduct] = useState({});
   let [open, setOpen] = useState(false);
@@ -169,20 +169,14 @@ export function ProductDetail() {
                 style={{ fontSize: "1.3em", fontWeight: "400" }}>
                 {product.product_name}
               </Typography>
-              <Typography
-                className={classes.details}
-                variant="body2"
-                gutterBottom>
+              <div className={classes.details} variant="body2">
                 <ul style={{ listStyle: "initial" }}>
                   {product.description.map((item, i) => (
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
-              </Typography>
-              <Typography
-                className={classes.details}
-                variant="body2"
-                gutterBottom>
+              </div>
+              <div className={classes.details} variant="body2">
                 <p>size</p>
                 <NativeSelect
                   id="select"
@@ -190,13 +184,13 @@ export function ProductDetail() {
                   value={size}
                   onChange={(e) => setSize(e.target.value)}>
                   {product.size.map((item, i) => (
-                    <option value={item}>{item}</option>
+                    <option value={item} key={i}>
+                      {item}
+                    </option>
                   ))}
                 </NativeSelect>
-              </Typography>
-              <Typography
-                className={classes.details}
-                style={{ display: "flex" }}>
+              </div>
+              <div className={classes.details} style={{ display: "flex" }}>
                 <Grid item xs></Grid>
                 <Grid
                   item
@@ -219,7 +213,7 @@ export function ProductDetail() {
                 </Grid>
                 <Grid item xs></Grid>
                 {/* <div style={{border:"1px solid grey",width:"100px"}}><span>-</span><span>value</span><span>+</span></div> */}
-              </Typography>
+              </div>
               <Typography className={classes.details}>
                 <Button
                   variant="outlined"

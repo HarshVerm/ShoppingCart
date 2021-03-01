@@ -3,8 +3,8 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { useSelector, useDispatch } from "react-redux";
 import { Typography, Grid, Container, Breadcrumbs } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { NavLink, Redirect, useHistory, Link } from "react-router-dom";
-import { Checkout_Right } from "./Checkout_Right";
+import { NavLink, useHistory } from "react-router-dom";
+import { CheckoutRight } from "./CheckoutRight";
 import { Input } from "./Input";
 import axios from "axios";
 import { getToken } from "../../../Utils/localstorage";
@@ -103,15 +103,15 @@ export const Checkout = () => {
 
   const paymentHandler = async () => {
     if (
-      fname == "" ||
-      lname == "" ||
-      company == "" ||
-      counrty == "" ||
-      pin == "" ||
-      state == "" ||
-      city == "" ||
-      add == "" ||
-      phone == ""
+      fname === "" ||
+      lname === "" ||
+      company === "" ||
+      counrty === "" ||
+      pin === "" ||
+      state === "" ||
+      city === "" ||
+      add === "" ||
+      phone === ""
     ) {
       alert("fill all details");
     } else {
@@ -165,7 +165,7 @@ export const Checkout = () => {
             await axios(config)
               .then(() => {
                 console.log("success");
-                alert("Suuccess");
+                // alert("Suuccess");
                 setTimeout(() => {
                   dispatch(removecart(user.id));
                   history.push("/");
@@ -317,7 +317,7 @@ export const Checkout = () => {
           </Grid>
         </Container>
       </Grid>
-      <Checkout_Right />
+      <CheckoutRight />
     </Grid>
   );
 };

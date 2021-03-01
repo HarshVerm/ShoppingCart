@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, CircularProgress } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,7 +87,7 @@ export function Login() {
   const err = useSelector((state) => state.users.isError);
   const errMsg = useSelector((state) => state.users.error);
   const token = useSelector((state) => state.users.token);
-  const loading = useSelector((state) => state.users.isLoading);
+  // const loading = useSelector((state) => state.users.isLoading);
 
   const handleSubmit = (e) => {
     e.preventDefault();

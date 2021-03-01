@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/styles";
 import { NavLink, Redirect } from "react-router-dom";
 import { getActive, userLogout } from "../../Redux/User/actions";
 import { setCartEmpty } from "../../Redux/AddCart/actions";
-import { getToken } from "../../Utils/localstorage";
+// import { getToken } from "../../Utils/localstorage";
 import { getOrders, emptyOrder } from "../../Redux/Orders/actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ export const Profile = () => {
     if (token && user.id) {
       dispatch(getOrders({ id: user.id }));
     }
-  }, []);
+  }, [user.id]);
 
   return (
     <Box className={classes.wrapper}>
@@ -102,9 +102,9 @@ export const Profile = () => {
             <Grid container justify="flex-start">
               <Grid item xs={5} lg={3}>
                 <Typography className={classes.sub_heading}>
-                  ORDER HISTORY
+                  <a href="/profile/order-list"> ORDER HISTORY</a>
                 </Typography>
-                <Typography className={classes.title}>
+                <div className={classes.title}>
                   {orders.length > 0 ? (
                     <>
                       <h5>Total Orders Placed:</h5>
@@ -113,7 +113,7 @@ export const Profile = () => {
                   ) : (
                     <p> You haven't placed any order yet</p>
                   )}
-                </Typography>
+                </div>
               </Grid>
               <Grid item xs></Grid>
               <Grid item>

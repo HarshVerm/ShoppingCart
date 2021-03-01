@@ -17,7 +17,7 @@ export const emptyOrder = () => {
 export const getOrders = (payload) => (dispatch) => {
   var config = {
     method: "post",
-    url: "http://localhost:5000/get-all-orders",
+    url: "https://shoppingcart991.herokuapp.com/get-all-orders",
     headers: {
       "Content-Type": "application/json",
     },

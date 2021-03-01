@@ -24,7 +24,7 @@ export const loadData = (paylaod) => (dispatch) => {
   dispatch(fetchLoading());
   var config = {
     method: "get",
-    url: "http://localhost:5000/products",
+    url: "https://shoppingcart991.herokuapp.com/products",
     headers: {},
     data: paylaod,
   };

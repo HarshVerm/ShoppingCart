@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -84,7 +85,8 @@ export function Cart() {
   // let arr = false;
   const classes = useStyles();
   // const [qty, setQty] = useState(0);
-  const user_id = useSelector((state) => state.users.user._id);
+  // const user_id = useSelector((state) => state.users.user._id);
+  const history = useHistory();
   const cart = useSelector((state) => state.cart.cart);
   const price = useSelector((state) => state.cart.totalPrice);
   const token = useSelector((state) => state.users.token);
@@ -110,6 +112,10 @@ export function Cart() {
     dispatch(getCartData());
   };
 
+  const handleBrowser = () => {
+    history.push("/");
+  };
+
   return (
     <Box className={classes.box_container}>
       <Container>
@@ -120,7 +126,7 @@ export function Cart() {
             <Typography style={{ fontSize: "10px" }}>
               Your cart is empty.
             </Typography>
-            <Button variant="contained">
+            <Button variant="contained" onClick={() => handleBrowser()}>
               <span style={{ color: "white" }}>CONTINUE BROWISING HERE</span>
             </Button>
           </Grid>

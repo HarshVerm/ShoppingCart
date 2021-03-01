@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => ({
   input_container: {
     padding: "0px 5px",
-    border: "1px solid black",
+    // border: "1px solid black",
     width: "auto",
     margin: "15px 5px",
     borderRadius: "4px",
@@ -30,7 +30,7 @@ export const Input = (props) => {
   //   const [value, setValue] = useState("");
   return (
     <Grid item xs className={classes.input_container}>
-      <div className={classes.input_label}>{value != "" ? label : ""}</div>
+      <div className={classes.input_label}>{value !== "" ? label : ""}</div>
       <input
         type={type}
         value={value}

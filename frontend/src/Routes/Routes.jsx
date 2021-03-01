@@ -7,11 +7,13 @@ import { ProductDetail } from "../Component/Pages/ProductDetail";
 import { Cart } from "../Component/Pages/Cart";
 import { Login } from "../Component/Pages/Login";
 import { Register } from "../Component/Pages/Register";
-import PrivateRoute from "./PrivateRoute";
+// import PrivateRoute from "./PrivateRoute";
 import { Profile } from "../Component/Pages/Profile";
 import { Header } from "../Component/Header";
 import { ContactUs } from "../Component/Pages/ContactUs";
 import { Checkout } from "../Component/Pages/Checkout/Checkout";
+import { CommingSoon } from "../Component/Pages/ComingSoon/CommingSoon";
+import { OrderList } from "../Component/Pages/OrderList/OrderList";
 
 export function Routes() {
   return (
@@ -24,6 +26,11 @@ export function Routes() {
           exact
           path="/profile"
           render={(props) => <Profile {...props} />}
+        />
+        <Route
+          exact
+          path="/profile/order-list"
+          render={(props) => <OrderList {...props} />}
         />
         <Route
           path="/product"
@@ -51,7 +58,7 @@ export function Routes() {
           exact
           render={(props) => <ContactUs {...props} />}
         />
-        <Route exact render={() => <h1>404</h1>} />
+        <Route exact render={() => <CommingSoon />} />
       </Switch>
       <Route path="/" render={(props) => <Footer {...props} />} />
     </div>
