@@ -65,7 +65,7 @@ export function ProductDetail() {
   useEffect(() => {
     var config = {
       method: "get",
-      url: `http://localhost:5000/product/${id}`,
+      url: `https://shoppingcart991.herokuapp.com/product/${id}`,
       headers: {},
     };
 

@@ -24,7 +24,7 @@ export const sentMail = (payload) => (dispatch) => {
   dispatch(setLoading());
   var config = {
     method: "post",
-    url: "http://localhost:5000/contact",
+    url: "https://shoppingcart991.herokuapp.com/contact",
     headers: {
       "Content-Type": "application/json",
     },

@@ -115,7 +115,7 @@ export const Checkout = () => {
     ) {
       alert("fill all details");
     } else {
-      const API_URL = `http://localhost:5000/`;
+      const API_URL = `https://shoppingcart991.herokuapp.com`;
       var config = {
         method: "POST",
         url: `${API_URL}order`,
