@@ -68,6 +68,7 @@ const useStyles = makeStyles(() => ({
     height: "40px",
     color: "black",
     borderRadius: "4px",
+    cursor: "pointer",
     // opacity: "0.",
   },
   footer: {
@@ -115,7 +116,7 @@ export const Checkout = () => {
     ) {
       alert("fill all details");
     } else {
-      const API_URL = `https://shoppingcart991.herokuapp.com`;
+      const API_URL = `https://shoppingcart991.herokuapp.com/`;
       var config = {
         method: "POST",
         url: `${API_URL}order`,
