@@ -57,7 +57,7 @@ export const getNo = (payload) => (dispatch) => {
   dispatch(orderLoading());
   var config = {
     method: "post",
-    url: "http://localhost:5000/get-order-length",
+    url: "https://shoppingcart991.herokuapp.com/get-order-length",
     headers: {
       "Content-Type": "application/json",
     },

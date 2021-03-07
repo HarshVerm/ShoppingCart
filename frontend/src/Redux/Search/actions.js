@@ -19,7 +19,7 @@ export const search = (payload) => (dispatch) => {
 
   var config = {
     method: "post",
-    url: "http://localhost:5000/search",
+    url: "https://shoppingcart991.herokuapp.com/search",
     headers: {
       "Content-Type": "application/json",
     },
