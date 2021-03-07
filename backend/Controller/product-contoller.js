@@ -19,4 +19,14 @@ const getById = (req, res) => {
     .catch((err) => res.status(400).send("error", err));
 };
 
-module.exports = { getData, getById };
+const searchResult = (req, res) => {
+  let query = req.body.query;
+  console.log(query);
+  Products.find({ product_name: { $regex: query, $options: "$i" } }).then(
+    (data) => {
+      res.status(200).send(data);
+    },
+  );
+};
+
+module.exports = { getData, getById, searchResult };

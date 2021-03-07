@@ -91,4 +91,20 @@ const getAllOdersByUser = (req, res) => {
   });
 };
 
-module.exports = { checkout, placeOrder, getOrderbyId, getAllOdersByUser };
+const getNoOdersByUser = (req, res) => {
+  console.log(req.body);
+  Order.find({ user_id: req.body.id }).then((data) => {
+    if (data.length != 0) {
+      return res.status(200).json(data.length);
+    }
+    return res.status(404).send({ Error: true, msg: "no order found" });
+  });
+};
+
+module.exports = {
+  checkout,
+  placeOrder,
+  getOrderbyId,
+  getAllOdersByUser,
+  getNoOdersByUser,
+};

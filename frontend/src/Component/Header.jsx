@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     // color: "#656565",
     paddingLeft: "20px",
-    cursor: "pointer",
   },
   heading: {
     lineHeight: 3,
@@ -19,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   icon_container: {
+    cursor: "pointer",
     display: "flex",
     flexDirection: "flex-end",
     // justifyContent: "",

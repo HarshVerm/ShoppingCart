@@ -1,0 +1,14 @@
+.orderlist_conatiner {
+  min-height: 150px;
+}
+
+.items {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+
+.display_name {
+  font-size: 8px;
+  width: 100px;
+}

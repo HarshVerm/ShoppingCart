@@ -8,6 +8,7 @@ import { loadData } from "../../Redux/LoadData/actions";
 import { getActive } from "../../Redux/User/actions";
 import { getToken } from "../../Utils/localstorage";
 import { getCartData } from "../../Redux/AddCart/actions";
+import { Spinner } from "../Spinner";
 
 const useStyle = makeStyles((theme) => ({
   body_container: {
@@ -28,7 +29,7 @@ export function Home() {
   const dispatch = useDispatch();
   const classes = useStyle();
   // const match = useMediaQuery("(min-width:700px)");
-  const products = useSelector((state) => state.products.products);
+  const { products, isLoading } = useSelector((state) => state.products);
   const token = getToken("token");
 
   useEffect(() => {
@@ -60,40 +61,42 @@ export function Home() {
       </div>
       <Container>
         <Grid container className={classes.body_container}>
-          {products?.map((item) => (
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              md={3}
-              lg={3}
-              xl={3}
-              key={item._id}
-              className={classes.item_container}
-              onClick={() => handleClick(item._id, item)}>
-              <div className={classes.items}>
-                <img src={item.img} width="100%" height="250px" alt="" />
-              </div>
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "12px",
-                  color: "#656565",
-                  marginBottom: "10px",
-                  fontWeight: 600,
-                }}>
-                {item.product_name}
-              </div>
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "10.5px",
-                  color: "#656565",
-                }}>
-                ${item.price}
-              </div>
-            </Grid>
-          ))}
+          {isLoading && <Spinner loading={isLoading} />}
+          {!isLoading &&
+            products?.map((item) => (
+              <Grid
+                item
+                xs={6}
+                sm={6}
+                md={3}
+                lg={3}
+                xl={3}
+                key={item._id}
+                className={classes.item_container}
+                onClick={() => handleClick(item._id, item)}>
+                <div className={classes.items}>
+                  <img src={item.img} width="100%" height="250px" alt="" />
+                </div>
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "12px",
+                    color: "#656565",
+                    marginBottom: "10px",
+                    fontWeight: 600,
+                  }}>
+                  {item.product_name}
+                </div>
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "10.5px",
+                    color: "#656565",
+                  }}>
+                  ${item.price}
+                </div>
+              </Grid>
+            ))}
         </Grid>
       </Container>
     </div>

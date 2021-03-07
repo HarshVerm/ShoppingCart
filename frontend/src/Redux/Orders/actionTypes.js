@@ -1,2 +1,4 @@
 export const EMPTY_ORDER_LIST = "EMPTY_ORDER_LIST";
 export const ALL_ORDER_BY_USER = "ALL_ORDER_BY_USER";
+export const ORDER_LIST_LOADING = "ORDER_LIST_LOADING";
+export const NO_OF_ORDER = "NO_OF_ORDER";
